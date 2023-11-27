@@ -1,0 +1,56 @@
+.SignupPage-container {
+    display: flex;
+    justify-content: center;
+    .login-container {
+      margin: 40px 0;
+      height: max-content;
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+      row-gap: 18px;
+      .login-title {
+        font-size: 28px;
+        font-weight: 600;
+        text-align: center;
+      }
+      .login-desc {
+        font-size: 14px;
+        text-align: center;
+      }
+      .field-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 4px;
+        .field-input {
+          width: 320px;
+          height: 46px;
+          padding: 0 20px;
+          border-radius: 2px;
+          border: 1px solid #dddfe2;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          &:focus {
+            border: 1px solid #dddfe2;
+            outline: none;
+          }
+        }
+      }
+      .error-message {
+        color: var(--foundation-blue-new-blue-new-100, #b4bfd6);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+      .email-submit-btn {
+        height: 42px;
+        border-radius: 2px;
+        border: none;
+      }
+    }
+  }
+  
