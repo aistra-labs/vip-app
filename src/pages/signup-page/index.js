@@ -59,7 +59,7 @@ const SignupPage = () => {
 
   const apiUrl = "https://dev.api.vip.aistra.com/auth/signup";
   const {
-    execute: executeSignup, ̰
+    execute: executeSignup,
     response,
     error,
     isLoading,
