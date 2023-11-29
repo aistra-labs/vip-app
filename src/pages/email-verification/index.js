@@ -20,7 +20,7 @@ const EmailVerification = () => {
   };
 
   const apiUrl =
-    "http://51.112.12.168:8095/auth/forget-password?emailId=" + email;
+    "https://dev.api.vip.aistra.com/auth/forget-password?emailId=" + email;
   const {
     execute: executeSubmit,
     response,

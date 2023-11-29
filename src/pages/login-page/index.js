@@ -37,7 +37,7 @@ const LoginPage = () => {
     setPasswordValid(isValid);
   };
 
-  const apiUrl = "http://51.112.12.168:8095/auth/login";
+  const apiUrl = "https://dev.api.vip.aistra.com/auth/login";
   const {
     execute: executeLogin,
     response,

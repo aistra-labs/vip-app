@@ -57,9 +57,9 @@ const SignupPage = () => {
     setReEnterPasswordValid(isValid);
   };
 
-  const apiUrl = "http://51.112.12.168:8095/auth/signup";
+  const apiUrl = "https://dev.api.vip.aistra.com/auth/signup";
   const {
-    execute: executeSignup,
+    execute: executeSignup, ̰
     response,
     error,
     isLoading,

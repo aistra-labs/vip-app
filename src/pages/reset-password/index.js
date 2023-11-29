@@ -45,7 +45,7 @@ const ResetPassword = () => {
     setReEnterPasswordValid(isValid);
   };
 
-  const apiUrl = "http://51.112.12.168:8095/auth/reset-password";
+  const apiUrl = "https://dev.api.vip.aistra.com/auth/reset-password";
   const {
     execute: executeSubmit,
     response,
