@@ -1,15 +1,26 @@
 .SignupPage-container {
-    display: flex;
-    justify-content: center;
-    .login-container {
-      margin: 40px 0;
-      height: max-content;
+  display: flex;
+  justify-content: center;
+  .login-container {
+    margin: 40px 0;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+    .message-body {
       display: flex;
       flex-direction: column;
-      padding: 18px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+      row-gap: 10px;
+      font-weight: 600;
+      .login-text {
+        color: var(--foundation-primary-1-primary-1500, #1678fb);
+        cursor: pointer;
+      }
+    }
+    .signup-fields-body {
+      display: flex;
+      flex-direction: column;
       row-gap: 18px;
+      height: max-content;
       .login-title {
         font-size: 28px;
         font-weight: 600;
@@ -53,4 +64,4 @@
       }
     }
   }
-  
+}
