@@ -49,6 +49,10 @@ const LoginPage = () => {
     // Watch for changes in the response and navigate accordingly
     console.log("useEffect response", response);
     if (response) {
+      // Store email and token in local storage
+      localStorage.setItem('token', response.token);
+  
+      // Navigate to the home page
       navigate("/home");
     }
   }, [response, navigate]);
@@ -85,7 +89,7 @@ const LoginPage = () => {
           Welcome to <span className="vip-heading">VIP</span>
         </div>
         <div className="login-desc">
-          Signin to start your trademark registration process
+          Sign in to start your trademark registration process
         </div>
         <div className="input-fields-body">
           <div className="field-container">
@@ -109,7 +113,7 @@ const LoginPage = () => {
           </div>
           <div className="field-container">
             <label className="field-label" htmlFor="password">
-              Passwrord
+              Password
             </label>
             <input
               type={isPasswordVisible ? "text" : "password"}
@@ -155,14 +159,14 @@ const LoginPage = () => {
           <div className="center-text">Or sign in with an email</div>
           <div className="line"></div>
         </div>
-        <div className="google-btn-container">
+        <a href="https://dev.api.vip.aistra.com/oauth2/authorization/google" target="_blank" rel="noopener noreferrer" className="google-btn-container">
           <img
             className="google-btn"
             src={images["google-button.png"]}
             loading="lazy"
             alt="google button"
           />
-        </div>
+        </a>
         <div className="copyright-text">© 2023, V.IP. All Rights Reserved.</div>
       </div>
     </div>

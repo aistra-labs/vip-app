@@ -16,6 +16,7 @@ const SignupPage = () => {
   const [isEmailValid, setEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
   const [isReEnterPasswordValid, setReEnterPasswordValid] = useState(false);
+  const [message, setMessage] = useState("");
 
   const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
@@ -67,9 +68,8 @@ const SignupPage = () => {
 
   useEffect(() => {
     // Watch for changes in the response and navigate accordingly
-    console.log('useEffect response', response);
     if (response) {
-      navigate("/");
+      setMessage("Your account has been created.");
     }
   }, [response, navigate]);
 
@@ -105,107 +105,127 @@ const SignupPage = () => {
     }
   };
 
+  const loginHandler = () => {
+    navigate("/");
+  };
+
   return (
     <div className="SignupPage-container">
       <div className="login-container">
-        <div className="login-title">Welcome to VIP</div>
-        <div className="login-desc">
-          Signup to start your trademark registration process
-        </div>
-        <div className="field-container">
-          <input
-            type="text"
-            id="firstName"
-            className="field-input"
-            placeholder="First Name"
-            value={firstName}
-            onChange={handleFirstNameChange}
-          />
-          {!firstName.length && (
-            <div className="error-message">*First Name is required</div>
-          )}
-        </div>
-        <div className="field-container">
-          <input
-            type="text"
-            id="lastName"
-            className="field-input"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={handleLastNameChange}
-          />
-          {!lastName.length && (
-            <div className="error-message">*Last Name is required</div>
-          )}
-        </div>
-        <div className="field-container">
-          <input
-            type="email"
-            id="email"
-            className="field-input"
-            placeholder="Username"
-            value={email}
-            onChange={handleEmailChange}
-          />
-          {!email.length && (
-            <div className="error-message">*Email is required</div>
-          )}
-          {!isEmailValid && email.length > 0 && (
-            <div className="error-message">*Email is invalid</div>
-          )}
-        </div>
-        <div className="field-container">
-          <input
-            type="password"
-            id="password"
-            className="field-input"
-            placeholder="Password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          {!password.length && (
-            <div className="error-message">*Password is required</div>
-          )}
-          {!isPasswordValid && password.length > 0 && (
-            <div className="error-message">*Password is too short</div>
-          )}
-        </div>
-        <div className="field-container">
-          <input
-            type="password"
-            id="reEnterPassword"
-            className="field-input"
-            placeholder="Re-enter Password"
-            value={reEnterPassword}
-            onChange={handleReEnterPasswordChange}
-          />
-          {!reEnterPassword.length && (
-            <div className="error-message">*Re-enter Password is required</div>
-          )}
-          {!isReEnterPasswordValid &&
-            reEnterPassword.length > 0 &&
-            password !== reEnterPassword && (
-              <div className="error-message">*Passwords do not match</div>
+        {message && message.length ? (
+          <div className="message-body">
+            <div>{message}</div>
+            <div>
+              Please proceed to{" "}
+              <span onClick={loginHandler} className="login-text">
+                Sign in
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div className="signup-fields-body">
+            <div className="login-title">Welcome to VIP</div>
+            <div className="login-desc">
+              Signup to start your trademark registration process
+            </div>
+            <div className="field-container">
+              <input
+                type="text"
+                id="firstName"
+                className="field-input"
+                placeholder="First Name"
+                value={firstName}
+                onChange={handleFirstNameChange}
+              />
+              {!firstName.length && (
+                <div className="error-message">*First Name is required</div>
+              )}
+            </div>
+            <div className="field-container">
+              <input
+                type="text"
+                id="lastName"
+                className="field-input"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={handleLastNameChange}
+              />
+              {!lastName.length && (
+                <div className="error-message">*Last Name is required</div>
+              )}
+            </div>
+            <div className="field-container">
+              <input
+                type="email"
+                id="email"
+                className="field-input"
+                placeholder="Username"
+                value={email}
+                onChange={handleEmailChange}
+              />
+              {!email.length && (
+                <div className="error-message">*Email is required</div>
+              )}
+              {!isEmailValid && email.length > 0 && (
+                <div className="error-message">*Email is invalid</div>
+              )}
+            </div>
+            <div className="field-container">
+              <input
+                type="password"
+                id="password"
+                className="field-input"
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              {!password.length && (
+                <div className="error-message">*Password is required</div>
+              )}
+              {!isPasswordValid && password.length > 0 && (
+                <div className="error-message">*Password is too short</div>
+              )}
+            </div>
+            <div className="field-container">
+              <input
+                type="password"
+                id="reEnterPassword"
+                className="field-input"
+                placeholder="Re-enter Password"
+                value={reEnterPassword}
+                onChange={handleReEnterPasswordChange}
+              />
+              {!reEnterPassword.length && (
+                <div className="error-message">
+                  *Re-enter Password is required
+                </div>
+              )}
+              {!isReEnterPasswordValid &&
+                reEnterPassword.length > 0 &&
+                password !== reEnterPassword && (
+                  <div className="error-message">*Passwords do not match</div>
+                )}
+            </div>
+            <Button
+              variant="contained"
+              color="primary"
+              className="email-submit-btn"
+              onClick={handleSubmitClick}
+              disabled={
+                !isFirstNameValid ||
+                !isLastNameValid ||
+                !isEmailValid ||
+                !isPasswordValid ||
+                !isReEnterPasswordValid
+              }
+            >
+              Sign up
+            </Button>
+            {error && error.length && (
+              <div className="error-message">{`*${error}`}</div>
             )}
-        </div>
-        <Button
-          variant="contained"
-          color="primary"
-          className="email-submit-btn"
-          onClick={handleSubmitClick}
-          disabled={
-            !isFirstNameValid ||
-            !isLastNameValid ||
-            !isEmailValid ||
-            !isPasswordValid ||
-            !isReEnterPasswordValid
-          }
-        >
-          Sign up
-        </Button>
-        {error && error.length && (
-            <div className="error-message">{`*${error}`}</div>
-          )}
+          </div>
+        )}
       </div>
     </div>
   );

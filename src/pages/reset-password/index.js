@@ -81,7 +81,7 @@ const ResetPassword = () => {
     }
   };
   const loginHandler = () => {
-    navigate("/login");
+    navigate("/");
   }
 
   if (isLoading) {
