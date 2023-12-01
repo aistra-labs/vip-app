@@ -50,10 +50,10 @@ const LoginPage = () => {
     console.log("useEffect response", response);
     if (response) {
       // Store email and token in local storage
-      localStorage.setItem('token', response.token);
-  
+      localStorage.setItem("token", response.token);
+
       // Navigate to the home page
-      navigate("/home");
+      navigate("/generate-brand");
     }
   }, [response, navigate]);
 
@@ -69,17 +69,13 @@ const LoginPage = () => {
       } else if (response) {
         // Handle successful response
         console.log("Login Response:", response);
-        navigate("/home");
+        navigate("/generate-brand");
       }
     }
   };
 
   const forgotHandler = () => {
     navigate("/verify-email");
-  }
-
-  const handleGoogleClick = () => {
-    // Your logic for Google sign-in
   };
 
   return (
@@ -123,13 +119,25 @@ const LoginPage = () => {
               value={password}
               onChange={handlePasswordChange}
             />
-            <div className="show-hide-container" onClick={togglePasswordVisibility}>
-              <img
-                className="show-hide-btn"
-                src={images["show-hide-logo.svg"]}
-                loading="lazy"
-                alt="show button"
-              />
+            <div
+              className="show-hide-container"
+              onClick={togglePasswordVisibility}
+            >
+              {!isPasswordVisible ? (
+                <img
+                  className="show-hide-btn"
+                  src={images["show-logo.svg"]}
+                  loading="lazy"
+                  alt="show button"
+                />
+              ) : (
+                <img
+                  className="show-hide-btn"
+                  src={images["hide-logo.svg"]}
+                  loading="lazy"
+                  alt="hide button"
+                />
+              )}
             </div>
             {!password.length && (
               <div className="error-message">*Password is required</div>
@@ -159,7 +167,12 @@ const LoginPage = () => {
           <div className="center-text">Or sign in with an email</div>
           <div className="line"></div>
         </div>
-        <a href="https://dev.api.vip.aistra.com/oauth2/authorization/google" target="_blank" rel="noopener noreferrer" className="google-btn-container">
+        <a
+          href="https://dev.api.vip.aistra.com/oauth2/authorization/google"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="google-btn-container"
+        >
           <img
             className="google-btn"
             src={images["google-button.png"]}

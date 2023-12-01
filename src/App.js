@@ -8,7 +8,7 @@ import { Suspense, lazy } from "react";
 
 const LoginPage = lazy(() => import('./pages/login-page'));
 const SignupPage = lazy(() => import('./pages/signup-page'));
-const Home = lazy(() => import('./pages/home'));
+const GenerateBrandContainer = lazy(() => import('./pages/generate-brand'));
 const Header = lazy(() => import('./components/header'));
 const EmailVerification = lazy(() => import('./pages/email-verification'));
 const ResetPassword = lazy(() => import('./pages/reset-password'));
@@ -22,7 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/generate-brand" element={<GenerateBrandContainer />} />
             <Route path="/verify-email" element={<EmailVerification />} />
             <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
