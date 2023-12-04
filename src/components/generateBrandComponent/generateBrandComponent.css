@@ -16,3 +16,7 @@
         color: #000;
     }
 }
+.brand-submit-button{
+  margin: 10px !important;
+  text-transform: initial !important;
+}

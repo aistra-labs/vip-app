@@ -6,8 +6,10 @@ import Chip from '@mui/material/Chip';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import IncrementDecrementCounter from '../common/incrementDecrementCounter'
+import Button from '@mui/material/Button';
+import GeneratededBrandName from '../generatedBrandNameComponent'
 import '../generateBrandComponent/generateBrandComponent.css'
-import TagsInput from '../common/tagInput';
+
 const GenerateBrandComponent = () => {
   const[radioValue ,setRadioValue] = useState("meaningful");
   const [selectedChips, setSelectedChips] = useState([]);
@@ -15,6 +17,7 @@ const GenerateBrandComponent = () => {
   const [maxLength, setMaxLength] = useState(0);
   const [maxSyllableCount, setMaxSyllableCount]= useState(0);
   const [minSyllableCount, setMinSyllableCount]= useState(0);
+  const [showBrand, setShowBrand] = useState(false);
   const initialCheckboxes = [
     { id: 1, label: 'Alternate Spellings' },
     { id: 2, label: 'Words from other language' },
@@ -79,6 +82,13 @@ const GenerateBrandComponent = () => {
       )
     );
   };
+  //
+  const handleSubmitBrandDetails = () =>{
+    setShowBrand(true);
+  }
+  const handleCloseBrandModel =()=>{
+    setShowBrand(false);
+  }
 
   //handle 4 counter on click
   const getMinCount = (count) => {
@@ -93,19 +103,18 @@ const GenerateBrandComponent = () => {
   const getMinSyllableCount = (count) => {
     console.log(count,'countcount');
   }
-  function handleSelecetedTags(items) {
-    console.log(items);
-  }
+  
   return (
     <div className="generate-brand-wrapper">
       <CustomCollapseCard
         title="Describe your product or business"
         spanTitle="(Be as specific as possible)"
+        expand = {true}
       >
        <TextField id="outlined-basic" fullWidth variant="outlined" />
       </CustomCollapseCard>
-
-      <CustomCollapseCard title="Choose what kind of name you're looking for">
+      <CustomCollapseCard
+       title="Choose what kind of name you're looking for">
          <div>
         <Radio
         {...controlProps('meaningful')}
@@ -128,7 +137,6 @@ const GenerateBrandComponent = () => {
       />{"Catchy"}
          </div>
       </CustomCollapseCard>
-
       <CustomCollapseCard
         title="Which of these attributes describe your brand. "
         spanTitle="(Select upto 3)"
@@ -137,7 +145,7 @@ const GenerateBrandComponent = () => {
         {chipData.map(chip => 
         <Chip
         style={{margin:'5px' , fontSize:"14px" ,fontWeight:"500" ,
-        backgroundColor:selectedChips.includes(chip.label) ? '#FFDCAB' : '#fff',
+        backgroundColor:selectedChips.includes(chip.label) ? '#FFF7ED' : '#fff',
         border: selectedChips.includes(chip.label) ? "1px solid #FFDCAB" :"1px solid #E6E6E6",
         }}
         label={chip.label}
@@ -191,15 +199,9 @@ const GenerateBrandComponent = () => {
         </div> 
       
       </CustomCollapseCard>
-      {/* <TagsInput
-        selectedTags={handleSelecetedTags}
-        fullWidth
-        variant="outlined"
-        id="tags"
-        name="tags"
-        placeholder="add Tags"
-        label="tags"
-      /> */}
+      
+      <GeneratededBrandName showBrand = {showBrand} handleCloseBrandModel = {handleCloseBrandModel} generatedBrand ={['Wearlogix','FunWalk','TeeTalk','Tshirtello','TeeGram']}/>
+      <Button className="brand-submit-button" size="large" variant="contained" onClick={()=>handleSubmitBrandDetails()}>Generate Brand Names</Button>
     </div>
   );
 };

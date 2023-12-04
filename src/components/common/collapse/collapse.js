@@ -20,7 +20,7 @@ const ExpandMore = styled((props) => {
 }));
 
 const  CustomCollapseCard = (props) => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(props.expand || false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

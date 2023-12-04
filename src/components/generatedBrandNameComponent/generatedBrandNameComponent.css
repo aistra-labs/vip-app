@@ -1,0 +1,59 @@
+.generated-brand-modal{
+    padding:100px 50px 50px 50px;
+    position: relative;
+    height: 100%;
+    .modal-brand-heading{
+        margin: 10px 0 !important;
+        /* max-width: 600px !important; */
+    }
+    .close-brand-model{
+        text-align: right;
+    }
+    .brand-chips-box{
+        margin: 20px 0;
+        align-items: center;
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        flex-wrap: wrap;
+        .generated-brand-chip{
+            width: 308px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            align-items: center;
+            margin: 6px 12px 6px 0;
+            p{
+                font-size: 14px;
+                font-weight: 500;
+                color: #000;
+            }
+        }
+        .generated-brand-chip-selected{
+            border: 1px solid #FFDCAB;
+            background-color: #FFF7ED;
+        }
+        .generated-brand-chip-default{
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+    }
+    .brand-modal-footer{
+        height: 87px;
+        box-shadow: 0px -4px 12px 0px #0000000F;
+        text-align: right;
+        margin-right: 30px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center; 
+        .brand-submit-button{
+            align-items: center;
+            margin-right: 20px !important;
+        }
+    }
+}
