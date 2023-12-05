@@ -9,34 +9,13 @@
     .close-brand-model{
         text-align: right;
     }
-    .brand-chips-box{
-        margin: 20px 0;
-        align-items: center;
-        display: flex;
-        justify-content: flex-start;
-        width: 100%;
-        flex-wrap: wrap;
-        .generated-brand-chip{
-            width: 308px;
-            border-radius: 8px;
+    .domain-table{
+        margin: 10px 0;
+        .table-social-heading{
             display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            align-items: center;
-            margin: 6px 12px 6px 0;
-            p{
-                font-size: 14px;
-                font-weight: 500;
-                color: #000;
-            }
-        }
-        .generated-brand-chip-selected{
-            border: 1px solid #FFDCAB;
-            background-color: #FFF7ED;
-        }
-        .generated-brand-chip-default{
-            border: 1px solid #ccc;
-            background-color: #fff;
+            justify-content: center;
+            align-items: center; 
+            width: 100px;
         }
     }
     .brand-modal-footer{
@@ -53,6 +32,7 @@
         align-items: center; 
         .brand-submit-button{
             align-items: center;
+            text-transform: initial;
             margin-right: 20px !important;
             color:#fff;
             background-color: #1678FB;
