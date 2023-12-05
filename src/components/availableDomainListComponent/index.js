@@ -10,10 +10,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-  const GeneratededBrandName = (props)=> {
+  const AvailableDomainListComponent = (props)=> {
   const [brandList, setBrandList] = useState(props.generatedBrand);
   const [selectedBrand, setSelectedBrand] = useState([]);
   const [customAddedBrand, setcustomeAddedBrand] = useState([]);
+  
 
   const handleClose = () => {
      props.handleCloseBrandModel();
@@ -37,7 +38,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return (
     <React.Fragment>
       <Dialog
-        open={props.showBrand}
+        open={props.showDomain}
         fullWidth
         maxWidth="md"  
         PaperProps={{
@@ -72,35 +73,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         <Typography variant="caption" display="block" color="#5A687A" mb={1} gutterBottom>
         Select the brand names for which you want to carry out the domain availability & trademark search for
       </Typography>
-      <TagsInput
-        selectedTags={handleSelecetedTags}
-        fullWidth
-        variant="outlined"
-        id="tags"
-        name="tags"
-        placeholder ="Enter your own brand names"
-        style={{
-            width:"100%" 
-        }}
-      />
-        </div>
-      <div className='brand-chips-box'>
-      {brandList.map((brand) => (
-        <div
-          key={brand}
-          className={`generated-brand-chip ${
-            selectedBrand.includes(brand) ? 'generated-brand-chip-selected' : 'generated-brand-chip-default'
-          }`}
-          onClick={() => toggleBrandSelection(brand)}
-        >
-          <p>{brand}</p>
-          <img
-              src={images[ selectedBrand.includes(brand) ? "tick-active.svg" : "tick-gray.svg"]}
-              loading="lazy"
-              alt="tick-icon"
-            />
-        </div>
-      ))}
       </div>
       <div className='brand-modal-footer'>
       <Button className="brand-submit-button" size="large" variant="contained" onClick={''}>Proceed to Domain & Social Media Search</Button>
@@ -110,4 +82,4 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     </React.Fragment>
   );
 }
-export default GeneratededBrandName;
+export default AvailableDomainListComponent;

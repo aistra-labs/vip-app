@@ -27,7 +27,7 @@ const  CustomCollapseCard = (props) => {
   };
 
   return (
-    <Card sx={{ width: 980 }} style={{padding:'5px', border: "1px solid #EAECEE", boxShadow:"none", margin:"10px" ,borderRadius:'8px'}}>
+    <Card  style={{padding:'5px', border: "1px solid #EAECEE", boxShadow:"none", margin:"10px" ,borderRadius:'8px'}}>
       <CardActions disableSpacing>
       <div className='brand-label'>{props.title}<span className='span-title'>{props.spanTitle}</span></div>
         <ExpandMore

@@ -82,7 +82,7 @@ export default function TagsInput({ ...props }) {
                       tabIndex={-1}
                       label={item}
                       style={{marginRight:"10px"}}
-                    //   className={classes.chip}
+                      // className={classes.chip}
                       onDelete={handleDelete(item)}
                     />
                   )),

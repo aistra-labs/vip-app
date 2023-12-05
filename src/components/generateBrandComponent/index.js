@@ -1,4 +1,4 @@
-import  React, {useState} from 'react';
+import  React, {useEffect, useState} from 'react';
 import CustomCollapseCard from '../common/collapse/collapse';
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
@@ -9,6 +9,7 @@ import IncrementDecrementCounter from '../common/incrementDecrementCounter'
 import Button from '@mui/material/Button';
 import GeneratededBrandName from '../generatedBrandNameComponent'
 import '../generateBrandComponent/generateBrandComponent.css'
+import apiRequest from '../api/api';
 
 const GenerateBrandComponent = () => {
   const[radioValue ,setRadioValue] = useState("meaningful");
@@ -40,6 +41,21 @@ const GenerateBrandComponent = () => {
     { key: 3, label: 'Testing2' },
     { key: 4, label: 'Testing3' },
   ]);
+
+  useEffect(()=>{
+    getContants();
+  },[])
+   
+  const getContants = async() => {
+    try {
+      const url = 'plus/constants';
+      const result = await apiRequest(url, 'GET');
+      console.log(result,'resultresult');
+    } catch (error) {
+      // Handle error
+      console.error('Error in POST request:', error);
+    }
+  };
 
   //handle radio feild
   const handleRadioChange = (event) => {
