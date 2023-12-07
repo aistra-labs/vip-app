@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import "../../common/headerStepper/headerStepper.css";
+import { useNavigate } from "react-router-dom";
 
 const HeaderStepper = (props) => {
-  const [step, setStep] = useState(props.step);
+  const navigate = useNavigate();
   return (
     <div className="stepper-wrapper">
-      <div className="stepper-step stepper-active">
+      <div
+        className="stepper-step stepper-active"
+        onClick={() => navigate("/generate-brand")}
+      >
         <span className="stepper-count stepper-default">1</span>Generate Brand
         Name
       </div>
@@ -14,6 +18,7 @@ const HeaderStepper = (props) => {
         className={`stepper-step ${
           props.step >= 2 ? "stepper-active" : "stepper-default"
         }`}
+        onClick={() => navigate("/domian-availability")}
       >
         <span
           className={`stepper-count ${

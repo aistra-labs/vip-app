@@ -8,7 +8,7 @@
       padding: 6px 16px 7px 6px;
       font-size: 14px;
       font-weight: 600;
-      
+      cursor: pointer;
     }
     .stepper-active{
         color: #fff;

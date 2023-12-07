@@ -10,51 +10,90 @@ import Button from "@mui/material/Button";
 import GeneratededBrandName from "../generatedBrandNameComponent";
 import "../generateBrandComponent/generateBrandComponent.css";
 import apiRequest from "../api/api";
+import AlertDialogSlide from "../common/AlertDialog";
 
 const GenerateBrandComponent = () => {
-  const [radioValue, setRadioValue] = useState("meaningful");
+  const [brandName, setBrandName] = useState("");
+  const [radioValue, setRadioValue] = useState("MEANINGFUL");
   const [selectedChips, setSelectedChips] = useState([]);
-  const [minLength, setMinLength] = useState(0);
-  const [maxLength, setMaxLength] = useState(0);
-  const [maxSyllableCount, setMaxSyllableCount] = useState(0);
-  const [minSyllableCount, setMinSyllableCount] = useState(0);
+  const [minLength, setMinLength] = useState(1);
+  const [maxLength, setMaxLength] = useState(1);
+  const [maxSyllableCount, setMaxSyllableCount] = useState(1);
+  const [minSyllableCount, setMinSyllableCount] = useState(1);
   const [showBrand, setShowBrand] = useState(false);
+  const [optionals, setOptionals] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [generatedBrand, setGeneratedBrand] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showNameField, setShowNameField] = useState(true);
+  const [showradioField, setShowRadioField] = useState(false);
+  const [showChipField, setShowChipField] = useState(false);
+  const [showChecBoxField, setShowCheckboxField] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   const initialCheckboxes = [
-    { id: 1, label: "Alternate Spellings" },
-    { id: 2, label: "Words from other language" },
+    {
+      id: 1,
+      label: "Alternate Spellings",
+      value: "ALT_SPELL",
+      checked: optionals.includes("ALT_SPELL"),
+    },
+    {
+      id: 2,
+      label: "Words from other language",
+      value: "ALT_LANG",
+      checked: optionals.includes("ALT_LANG"),
+    },
   ];
   const [checkboxes, setCheckboxes] = useState(initialCheckboxes);
 
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: "Adorable" },
-    { key: 1, label: "Ambitious" },
-    { key: 2, label: "Calm" },
-    { key: 3, label: "Classic" },
-    { key: 4, label: "Comforting" },
-    { key: 0, label: "Happy" },
-    { key: 1, label: "Long Lasting" },
-    { key: 2, label: "Mature" },
-    { key: 3, label: "Modern" },
-    { key: 4, label: "Brandable" },
-    { key: 1, label: "Testing1" },
-    { key: 2, label: "Acronyms" },
-    { key: 3, label: "Testing2" },
-    { key: 4, label: "Testing3" },
-  ]);
+  const [chipData, setChipData] = React.useState([]);
 
   useEffect(() => {
     getContants();
+    getDomainData();
   }, []);
 
   const getContants = async () => {
     try {
       const url = "plus/constants";
       const result = await apiRequest(url, "GET");
-      console.log(result, "resultresult");
+      setChipData(result.Attributes);
     } catch (error) {
       // Handle error
       console.error("Error in POST request:", error);
     }
+  };
+
+  const getDomainData = async () => {
+    try {
+      const url = "plus/transaction";
+      const data = ["BRAND_GENERATION"];
+      const result = await apiRequest(url, "POST", data);
+
+      const selectedNamesResponse = result.responses.find(
+        (response) => response.type === "BRAND_GENERATION"
+      );
+      setBrandName(selectedNamesResponse.obj.description);
+      setRadioValue(selectedNamesResponse.obj.nameType);
+      // setOptionals(selectedNamesResponse.obj.optionals);
+      setSelectedChips(selectedNamesResponse.obj.attributes);
+      setMaxLength(selectedNamesResponse.obj.generationCriteria.manLength || 1);
+      setMinLength(selectedNamesResponse.obj.generationCriteria.mixLength || 1);
+      setMaxSyllableCount(
+        selectedNamesResponse.obj.generationCriteria.maxSyllableCount
+      );
+      setMinSyllableCount(
+        selectedNamesResponse.obj.generationCriteria.minSyllableCount
+      );
+    } catch (error) {
+      // Handle error
+      console.error("Error in POST request:", error);
+    }
+  };
+  // handle Brnad name
+  const handleBrandName = (e) => {
+    setBrandName(e.target.value);
   };
 
   //handle radio feild
@@ -79,7 +118,6 @@ const GenerateBrandComponent = () => {
         prevChips.filter((chip) => chip !== chipValue)
       );
     } else {
-      console.log(selectedChips.length, "electedChips.length");
       if (selectedChips.length < 3) {
         setSelectedChips((prevChips) => [...prevChips, chipValue]);
       }
@@ -94,6 +132,7 @@ const GenerateBrandComponent = () => {
       );
     }
   };
+
   // handle checkbox on select
   const handleCheckboxChange = (checkboxId) => {
     setCheckboxes((prevCheckboxes) =>
@@ -104,26 +143,107 @@ const GenerateBrandComponent = () => {
       )
     );
   };
-  //
+
+  // Get values of checked checkboxes
+  const checkedValues = checkboxes
+    .filter((checkbox) => checkbox.checked)
+    .map((checkbox) => checkbox.value);
+
   const handleSubmitBrandDetails = () => {
-    setShowBrand(true);
+    setOptionals(checkedValues);
+    let data = {
+      description: brandName,
+      nameType: radioValue,
+      attributes: selectedChips,
+      optionals: checkedValues,
+      generationCriteria: {
+        minLength: minLength || 1,
+        maxLength: maxLength || 1,
+        minSyllableCount: minSyllableCount || 1,
+        maxSyllableCount: maxSyllableCount || 1,
+      },
+    };
+    const validationErrors = {};
+
+    // Check for a non-empty description and minimum length of 4 characters
+    if (!data.description || data.description.length < 4) {
+      validationErrors.brandName =
+        "Brand name is required and must be at least 4 characters.";
+      setShowNameField(true);
+      setShowRadioField(false);
+      setShowChipField(false);
+      setShowCheckboxField(false);
+    }
+
+    // Check if attributes are selected
+    if (data.attributes.length === 0) {
+      validationErrors.selectedChips = "Attributes are required.";
+      setShowNameField(false);
+      setShowRadioField(false);
+      setShowChipField(true);
+      setShowCheckboxField(false);
+    }
+
+    // Check if optionals are selected
+    if (data.optionals.length === 0) {
+      setShowNameField(false);
+      setShowRadioField(false);
+      setShowChipField(false);
+      setShowCheckboxField(true);
+
+      validationErrors.checkedValues = "Optionals are required.";
+    }
+
+    // If there are validation errors, update the state to show errors
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      setErrors({});
+      saveGenerateBrandDeatils(data);
+    }
   };
+
   const handleCloseBrandModel = () => {
     setShowBrand(false);
   };
 
   //handle 4 counter on click
   const getMinCount = (count) => {
-    console.log(count, "countcount");
+    setMinLength(count);
   };
   const getMaxCount = (count) => {
-    console.log(count, "countcount");
+    setMaxLength(count);
   };
   const getMaxSyllableCount = (count) => {
-    console.log(count, "countcount");
+    setMaxSyllableCount(count);
   };
   const getMinSyllableCount = (count) => {
-    console.log(count, "countcount");
+    setMinSyllableCount(count);
+  };
+
+  const saveGenerateBrandDeatils = async (data) => {
+    try {
+      setIsLoading(true);
+      const url = "plus/brands/generate";
+      const result = await apiRequest(url, "POST", data);
+      if (result && result.statusCode && result.statusCode !== 200) {
+        setErrorMessage(result.message);
+        setOpenAlert(true);
+        setIsLoading(false);
+      } else {
+        setShowBrand(true);
+        setGeneratedBrand(result.names);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      // Handle error
+      setIsLoading(false);
+      console.error("Error in POST request:", error.status, error);
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
   };
 
   return (
@@ -131,26 +251,40 @@ const GenerateBrandComponent = () => {
       <CustomCollapseCard
         title="Describe your product or business"
         spanTitle="(Be as specific as possible)"
-        expand={true}
+        expand={showNameField}
       >
-        <TextField id="outlined-basic" fullWidth variant="outlined" />
+        <TextField
+          onChange={(e) => handleBrandName(e)}
+          id="outlined-basic"
+          fullWidth
+          variant="outlined"
+          value={brandName}
+        />
+        {errors.brandName && errors.brandName && (
+          <div style={{ color: "red", fontSize: "12px" }}>
+            {"*" + errors.brandName}
+          </div>
+        )}
       </CustomCollapseCard>
-      <CustomCollapseCard title="Choose what kind of name you're looking for">
+      <CustomCollapseCard
+        title="Choose what kind of name you're looking for"
+        expand={showradioField}
+      >
         <div>
           <Radio
-            {...controlProps("meaningful")}
+            {...controlProps("MEANINGFUL")}
             sx={{
-              color: radioValue === "meaningful" ? "#FFB248" : "",
+              color: radioValue === "MEANINGFUL" ? "#FFB248" : "",
               "&.Mui-checked": {
                 color: "#FFB248",
               },
             }}
           />
-          {"Meaningful"} 
+          {"Meaningful"}
           <Radio
-            {...controlProps("catchy")}
+            {...controlProps("CATCHY")}
             sx={{
-              color: radioValue === "catchy" ? "#FFB248" : "",
+              color: radioValue === "CATCHY" ? "#FFB248" : "",
               "&.Mui-checked": {
                 color: "#FFB248",
               },
@@ -162,6 +296,7 @@ const GenerateBrandComponent = () => {
       <CustomCollapseCard
         title="Which of these attributes describe your brand. "
         spanTitle="(Select upto 3)"
+        expand={showChipField}
       >
         <div>
           {chipData.map((chip) => (
@@ -170,38 +305,48 @@ const GenerateBrandComponent = () => {
                 margin: "5px",
                 fontSize: "14px",
                 fontWeight: "500",
-                backgroundColor: selectedChips.includes(chip.label)
+                backgroundColor: selectedChips.includes(chip)
                   ? "#FFF7ED"
                   : "#fff",
-                border: selectedChips.includes(chip.label)
+                border: selectedChips.includes(chip)
                   ? "1px solid #FFDCAB"
                   : "1px solid #E6E6E6",
               }}
-              label={chip.label}
-              onClick={() => handleChipClick(chip.label)}
-            />
-          ))}
-        </div>
-        <div className="brand-selected-chip-Wrapper">
-          <div className="brand-selected-chip-heading">
-            Total {selectedChips.length} attributes selected{" "}
-          </div>
-          {selectedChips.map((chip) => (
-            <Chip
               label={chip}
-              style={{
-                margin: "5px",
-                fontSize: "14px",
-                fontWeight: "500",
-                backgroundColor: "#fff",
-                border: "1px solid #E6E6E6",
-              }}
-              onDelete={() => handleChipDelete(chip)}
+              onClick={() => handleChipClick(chip)}
             />
           ))}
         </div>
+        {selectedChips && selectedChips.length > 0 && (
+          <div className="brand-selected-chip-Wrapper">
+            <div className="brand-selected-chip-heading">
+              Total {selectedChips.length} attributes selected{" "}
+            </div>
+            {selectedChips.map((chip) => (
+              <Chip
+                label={chip}
+                style={{
+                  margin: "5px",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  backgroundColor: "#fff",
+                  border: "1px solid #E6E6E6",
+                }}
+                onDelete={() => handleChipDelete(chip)}
+              />
+            ))}
+          </div>
+        )}
+        {errors.selectedChips && errors.selectedChips && (
+          <div style={{ color: "red", fontSize: "12px" }}>
+            {"*" + errors.selectedChips}
+          </div>
+        )}
       </CustomCollapseCard>
-      <CustomCollapseCard title="Would you like to include these in the search?">
+      <CustomCollapseCard
+        title="Would you like to include these in the search?"
+        expand={showChecBoxField}
+      >
         <div>
           {checkboxes.map((checkbox) => (
             <FormControlLabel
@@ -217,6 +362,11 @@ const GenerateBrandComponent = () => {
             />
           ))}
         </div>
+        {errors.checkedValues && errors.checkedValues && (
+          <div style={{ color: "red", fontSize: "12px" }}>
+            {"*" + errors.checkedValues}
+          </div>
+        )}
       </CustomCollapseCard>
       <CustomCollapseCard title="Define Criteria for name generation.">
         <div className="brand-counter">
@@ -244,26 +394,25 @@ const GenerateBrandComponent = () => {
           />
         </div>
       </CustomCollapseCard>
-
       <GeneratededBrandName
         showBrand={showBrand}
         handleCloseBrandModel={handleCloseBrandModel}
-        generatedBrand={[
-          "Wearlogix",
-          "FunWalk",
-          "TeeTalk",
-          "Tshirtello",
-          "TeeGram",
-        ]}
+        generatedBrand={generatedBrand}
       />
       <Button
         className="brand-submit-button"
         size="large"
         variant="contained"
+        disabled={isLoading}
         onClick={() => handleSubmitBrandDetails()}
       >
-        Generate Brand Names
+        {isLoading ? "Loading..." : "Generate Brand Names"}
       </Button>
+      <AlertDialogSlide
+        openAlert={openAlert}
+        message={errorMessage}
+        handleCloseAlert={handleCloseAlert}
+      />
     </div>
   );
 };
