@@ -1,5 +1,10 @@
 import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 const LoginPage = lazy(() => import("./pages/login-page"));
 const SignupPage = lazy(() => import("./pages/signup-page"));
@@ -12,6 +17,8 @@ const DomainSocialHandleAvailabilityContainer = lazy(() =>
 );
 
 function App() {
+  const isAuthenticated = localStorage.getItem("token");
+  console.log(isAuthenticated, "isAuthenticated");
   return (
     <div className="App">
       <Router>
@@ -22,14 +29,21 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/verify-email" element={<EmailVerification />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route
-              path="/generate-brand"
-              element={<GenerateBrandContainer />}
-            />
-            <Route
-              path="/domian-availability"
-              element={<DomainSocialHandleAvailabilityContainer />}
-            />
+            {isAuthenticated ? (
+              <>
+                <Route
+                  path="/generate-brand"
+                  element={<GenerateBrandContainer />}
+                />
+                <Route
+                  path="/domian-availability"
+                  element={<DomainSocialHandleAvailabilityContainer />}
+                />
+                {/* Add more authenticated routes as needed */}
+              </>
+            ) : (
+              <Route path="/*" element={<Navigate to="/" />} />
+            )}
           </Routes>
         </Suspense>
       </Router>
