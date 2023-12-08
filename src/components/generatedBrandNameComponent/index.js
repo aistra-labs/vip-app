@@ -121,32 +121,6 @@ const GeneratededBrandName = (props) => {
               }}
             />
           </div>
-          {/* <div className="brand-chips-box">
-            {brandList.map((brand, index) => (
-              <div
-                key={index}
-                className={`generated-brand-chip ${
-                  selectedBrand.includes(brand.name)
-                    ? "generated-brand-chip-selected"
-                    : "generated-brand-chip-default"
-                }`}
-                onClick={() => toggleBrandSelection(brandList[index])}
-              >
-                <p>{brand.name}</p>
-                <img
-                  src={
-                    images[
-                      selectedBrand.includes(brand.name)
-                        ? "tick-active.svg"
-                        : "tick-gray.svg"
-                    ]
-                  }
-                  loading="lazy"
-                  alt="tick-icon"
-                />
-              </div>
-            ))}
-          </div> */}
           <div className="brand-chips-box">
             {brandList.map((brand, index) => (
               <div
