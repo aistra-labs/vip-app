@@ -20,8 +20,8 @@ const GenerateBrandComponent = () => {
   const [radioValue, setRadioValue] = useState("MEANINGFUL");
   const [selectedChips, setSelectedChips] = useState([]);
   const [minLength, setMinLength] = useState(1);
-  const [maxLength, setMaxLength] = useState(1);
-  const [maxSyllableCount, setMaxSyllableCount] = useState(1);
+  const [maxLength, setMaxLength] = useState(10);
+  const [maxSyllableCount, setMaxSyllableCount] = useState(10);
   const [minSyllableCount, setMinSyllableCount] = useState(1);
   const [showBrand, setShowBrand] = useState(false);
   const [optionals, setOptionals] = useState([]);
