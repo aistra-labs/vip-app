@@ -35,7 +35,7 @@ const GenerateBrandComponent = () => {
   const [showChecBoxField, setShowCheckboxField] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const constants = useSelector((state) => state.constantData);
-  const [chipData, setChipData] = React.useState(constants.Attributes);
+  const [chipData, setChipData] = React.useState(constants?.Attributes || []);
   const initialCheckboxes = [
     {
       id: 1,
