@@ -11,8 +11,11 @@ import GeneratededBrandName from "../generatedBrandNameComponent";
 import "../generateBrandComponent/generateBrandComponent.css";
 import apiRequest from "../api/api";
 import AlertDialogSlide from "../common/AlertDialog";
+import { useDispatch, useSelector } from "react-redux";
+import { setConstants } from "../../redux/reducers";
 
 const GenerateBrandComponent = () => {
+  const dispatch = useDispatch();
   const [brandName, setBrandName] = useState("");
   const [radioValue, setRadioValue] = useState("MEANINGFUL");
   const [selectedChips, setSelectedChips] = useState([]);
@@ -31,6 +34,8 @@ const GenerateBrandComponent = () => {
   const [showChipField, setShowChipField] = useState(false);
   const [showChecBoxField, setShowCheckboxField] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const constants = useSelector((state) => state.constantData);
+  const [chipData, setChipData] = React.useState(constants.Attributes);
   const initialCheckboxes = [
     {
       id: 1,
@@ -47,8 +52,6 @@ const GenerateBrandComponent = () => {
   ];
   const [checkboxes, setCheckboxes] = useState(initialCheckboxes);
 
-  const [chipData, setChipData] = React.useState([]);
-
   useEffect(() => {
     getContants();
     getDomainData();
@@ -58,6 +61,7 @@ const GenerateBrandComponent = () => {
     try {
       const url = "plus/constants";
       const result = await apiRequest(url, "GET");
+      dispatch(setConstants(result));
       setChipData(result.Attributes);
     } catch (error) {
       // Handle error
@@ -70,13 +74,11 @@ const GenerateBrandComponent = () => {
       const url = "plus/transaction";
       const data = ["BRAND_GENERATION"];
       const result = await apiRequest(url, "POST", data);
-
       const selectedNamesResponse = result.responses.find(
         (response) => response.type === "BRAND_GENERATION"
       );
       setBrandName(selectedNamesResponse.obj.description);
       setRadioValue(selectedNamesResponse.obj.nameType);
-      // setOptionals(selectedNamesResponse.obj.optionals);
       setSelectedChips(selectedNamesResponse.obj.attributes);
       setMaxLength(selectedNamesResponse.obj.generationCriteria.manLength || 1);
       setMinLength(selectedNamesResponse.obj.generationCriteria.mixLength || 1);
@@ -149,6 +151,7 @@ const GenerateBrandComponent = () => {
     .filter((checkbox) => checkbox.checked)
     .map((checkbox) => checkbox.value);
 
+  // handle Submit brand generate
   const handleSubmitBrandDetails = () => {
     setOptionals(checkedValues);
     let data = {
@@ -203,6 +206,7 @@ const GenerateBrandComponent = () => {
     }
   };
 
+  // close created brand model
   const handleCloseBrandModel = () => {
     setShowBrand(false);
   };
@@ -221,6 +225,7 @@ const GenerateBrandComponent = () => {
     setMinSyllableCount(count);
   };
 
+  // save brand details and generate brand
   const saveGenerateBrandDeatils = async (data) => {
     try {
       setIsLoading(true);
