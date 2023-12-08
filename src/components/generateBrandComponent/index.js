@@ -80,10 +80,12 @@ const GenerateBrandComponent = () => {
       setBrandName(selectedNamesResponse.obj.description);
       setRadioValue(selectedNamesResponse.obj.nameType);
       setSelectedChips(selectedNamesResponse.obj.attributes);
-      setMaxLength(selectedNamesResponse.obj.generationCriteria.manLength || 1);
+      setMaxLength(
+        selectedNamesResponse.obj.generationCriteria.manLength || 10
+      );
       setMinLength(selectedNamesResponse.obj.generationCriteria.mixLength || 1);
       setMaxSyllableCount(
-        selectedNamesResponse.obj.generationCriteria.maxSyllableCount
+        selectedNamesResponse.obj.generationCriteria.maxSyllableCount || 10
       );
       setMinSyllableCount(
         selectedNamesResponse.obj.generationCriteria.minSyllableCount
@@ -161,9 +163,9 @@ const GenerateBrandComponent = () => {
       optionals: checkedValues,
       generationCriteria: {
         minLength: minLength || 1,
-        maxLength: maxLength || 1,
+        maxLength: maxLength || 10,
         minSyllableCount: minSyllableCount || 1,
-        maxSyllableCount: maxSyllableCount || 1,
+        maxSyllableCount: maxSyllableCount || 10,
       },
     };
     const validationErrors = {};
@@ -185,16 +187,6 @@ const GenerateBrandComponent = () => {
       setShowRadioField(false);
       setShowChipField(true);
       setShowCheckboxField(false);
-    }
-
-    // Check if optionals are selected
-    if (data.optionals.length === 0) {
-      setShowNameField(false);
-      setShowRadioField(false);
-      setShowChipField(false);
-      setShowCheckboxField(true);
-
-      validationErrors.checkedValues = "Optionals are required.";
     }
 
     // If there are validation errors, update the state to show errors
@@ -367,21 +359,16 @@ const GenerateBrandComponent = () => {
             />
           ))}
         </div>
-        {errors.checkedValues && errors.checkedValues && (
-          <div style={{ color: "red", fontSize: "12px" }}>
-            {"*" + errors.checkedValues}
-          </div>
-        )}
       </CustomCollapseCard>
       <CustomCollapseCard title="Define Criteria for name generation.">
         <div className="brand-counter">
           <IncrementDecrementCounter
-            label={"Minimum lenght"}
+            label={"Minimum length"}
             counts={minLength}
             getCount={getMinCount}
           />
           <IncrementDecrementCounter
-            label={"Maximum lenght"}
+            label={"Maximum length"}
             counts={maxLength}
             getCount={getMaxCount}
           />
