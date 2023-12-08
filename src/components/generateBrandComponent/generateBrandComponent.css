@@ -1,0 +1,29 @@
+.generate-brand-wrapper{
+    width: 980px;
+.brand-counter{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+.brand-selected-chip-Wrapper{
+    padding: 8px;
+    background-color: #F0F3F7;
+    border-radius: 8px;
+    margin-top: 18px;
+    .brand-selected-chip-heading{
+        font-size: 14px;
+        margin: 9px;
+        font-weight: 600;
+        color: #000;
+    }
+}
+.brand-submit-button{
+  margin: 10px !important;
+  text-transform: initial !important;
+  color:#fff;
+  background-color: #1678FB;
+  font-weight: 600;
+  border-radius: 6px;
+}
+}

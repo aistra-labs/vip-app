@@ -1,5 +1,8 @@
 .generate-brand-container{
     display: flex;
-    justify-content: center;
-    margin-top: 40px;
+    flex-direction: column;
+    margin: 40px;
+    .home-brand-heading{
+        margin: 0 10px;
+    }
 }

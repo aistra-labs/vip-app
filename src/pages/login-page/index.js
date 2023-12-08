@@ -4,15 +4,18 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import usePostApi from "../../components/usePostApi/usePostApi";
 import images from "../../components/images/images";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken, setUserData, resetvIPData } from "../../redux/reducers";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailValid, setEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  // const { token } = useSelector((state) => state.vip);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
@@ -51,7 +54,7 @@ const LoginPage = () => {
     if (response) {
       // Store email and token in local storage
       localStorage.setItem("token", response.token);
-
+      dispatch(setToken({ token: response.token }));
       // Navigate to the home page
       navigate("/generate-brand");
     }

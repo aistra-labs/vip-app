@@ -1,0 +1,54 @@
+.stepper-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 30px 25px 40px 10px;
+    .stepper-step{
+      border-radius: 30px;
+      padding: 6px 16px 7px 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .stepper-active{
+        color: #fff;
+        border: 1px solid #093269;
+        background-color: #093269;
+        .stepper-count{
+            padding: 2px 6px;
+            font-size: 12px;
+            border-radius: 100%;
+            margin-right: 5px;
+            background-color: #fff;
+            color: #000;
+            font-weight: 700;
+        }
+         .stepper-count-default{
+            background-color: #ccc;
+            padding: 2px 6px;
+         }
+    }
+    .stepper-default{
+        color: #000;
+        border: 1px solid #E6E6E6;
+        background-color: #FAFAFA;
+        .stepper-count{
+            padding: 2px 6px;
+            font-size: 12px;
+            border-radius: 100%;
+            margin-right: 5px;
+            background-color: #fff;
+            color: #000;
+            font-weight: 700;
+        }
+         .stepper-count-default{
+            background-color: #E6E6E6;
+            padding: 2px 6px;
+         }
+    }
+    .stepper-line{
+      width: 60px;
+      border-top: 1px solid #E6E6E6;
+      height: 0px;
+    }
+}
