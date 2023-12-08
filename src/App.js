@@ -17,8 +17,8 @@ const DomainSocialHandleAvailabilityContainer = lazy(() =>
 );
 
 function App() {
-  const isAuthenticated = localStorage.getItem("token");
-  console.log(isAuthenticated, "isAuthenticated");
+  // const isAuthenticated = localStorage.getItem("token");
+  // console.log(isAuthenticated, "isAuthenticated");
   return (
     <div className="App">
       <Router>
@@ -29,21 +29,21 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/verify-email" element={<EmailVerification />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            {isAuthenticated ? (
-              <>
-                <Route
-                  path="/generate-brand"
-                  element={<GenerateBrandContainer />}
-                />
-                <Route
-                  path="/domian-availability"
-                  element={<DomainSocialHandleAvailabilityContainer />}
-                />
-                {/* Add more authenticated routes as needed */}
-              </>
-            ) : (
+            {/* {isAuthenticated ? ( */}
+            <>
+              <Route
+                path="/generate-brand"
+                element={<GenerateBrandContainer />}
+              />
+              <Route
+                path="/domian-availability"
+                element={<DomainSocialHandleAvailabilityContainer />}
+              />
+              {/* Add more authenticated routes as needed */}
+            </>
+            {/* ) : (
               <Route path="/*" element={<Navigate to="/" />} />
-            )}
+            )} */}
           </Routes>
         </Suspense>
       </Router>
