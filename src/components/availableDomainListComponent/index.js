@@ -4,14 +4,12 @@ import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import Typography from "@mui/material/Typography";
 import "../availableDomainListComponent/availableDomainListComponent.css";
-import TagsInput from "../common/tagInput";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import images from "../images/images";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -42,6 +40,7 @@ const AvailableDomainListComponent = (props) => {
     backgroundColor: "#f2f2f2",
     borderRight: "1px solid #CACACA",
     textAlign: "center",
+    width: "100px",
   };
   const tableCellStyle = {
     borderRight: "1px solid #CACACA",

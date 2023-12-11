@@ -4,10 +4,12 @@ import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import Typography from "@mui/material/Typography";
 import "../generatedBrandNameComponent/generatedBrandNameComponent.css";
-import TagsInput from "../common/tagInput";
 import images from "../images/images";
 import apiRequest from "../api/api";
+import Chip from "@mui/material/Chip";
 import { useNavigate } from "react-router-dom";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -25,8 +27,8 @@ const GeneratededBrandName = (props) => {
     props.handleCloseBrandModel();
   };
 
-  const handleSelecetedTags = (items) => {
-    setcustomeAddedBrand(items);
+  const handleTagsChange = (event, value) => {
+    setcustomeAddedBrand(value);
   };
 
   const toggleBrandSelection = (brand) => {
@@ -55,7 +57,6 @@ const GeneratededBrandName = (props) => {
       const data = { names: brands };
       const result = await apiRequest(url, "POST", data);
       if (result) {
-        handleClose();
         navigate("/domian-availability");
       }
     } catch (error) {
@@ -109,16 +110,31 @@ const GeneratededBrandName = (props) => {
               Select the brand names for which you want to carry out the domain
               availability & trademark search for
             </Typography>
-            <TagsInput
-              selectedTags={handleSelecetedTags}
-              fullWidth
-              variant="outlined"
-              id="tags"
-              name="tags"
-              placeholder="Enter your own brand names"
-              style={{
-                width: "100%",
-              }}
+
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={[]}
+              defaultValue={customAddedBrand}
+              freeSolo
+              onChange={handleTagsChange}
+              value={customAddedBrand}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    variant="filled"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Enter your own brand names"
+                />
+              )}
             />
           </div>
           <div className="brand-chips-box">

@@ -3,13 +3,12 @@ import Typography from "@mui/material/Typography";
 import CustomCollapseCard from "../common/collapse/collapse";
 import TextField from "@mui/material/TextField";
 import "../DomainSocialAvailability/domainSocialAvailability.css";
-import TagsInput from "../common/tagInput";
 import Chip from "@mui/material/Chip";
 import images from "../images/images";
 import { Button } from "@mui/material";
 import apiRequest from "../api/api";
 import { useNavigate } from "react-router-dom";
-
+import Autocomplete from "@mui/material/Autocomplete";
 import AvailableDomainListComponent from "../availableDomainListComponent";
 
 const DomainSocialHandleAvailability = () => {
@@ -35,13 +34,14 @@ const DomainSocialHandleAvailability = () => {
     ".me",
   ];
   const socialHandle = ["FACEBOOK", "X", "LINKEDIN", "INSTAGRAM"];
+
+  const handleTagsChange = (event, value) => {
+    setCustomDomain(value);
+  };
+
   useEffect(() => {
     getDomainData();
   }, []);
-
-  const handleSelecetedTags = (items) => {
-    setCustomDomain(items);
-  };
 
   const getDomainData = async () => {
     try {
@@ -66,10 +66,12 @@ const DomainSocialHandleAvailability = () => {
       if (selectedDomainResponse) {
         setBudget(selectedDomainResponse.obj.budget);
         const allTLDs = selectedDomainResponse.obj.domainTLDs;
-
+        console.log(allTLDs, "allTLDsallTLDs");
         // Filter TLDs into selectedChips and customDomain
         const selectedChips = allTLDs.filter((tld) => chipData.includes(tld));
+        console.log(selectedChips, "selectedChipsselectedChips");
         const customDomain = allTLDs.filter((tld) => !chipData.includes(tld));
+        console.log(customDomain, "customDomaincustomDomain");
         setSelectedChips(selectedChips);
         setCustomDomain(customDomain);
         setSelectedSocial(selectedDomainResponse.obj.socialSites);
@@ -96,6 +98,7 @@ const DomainSocialHandleAvailability = () => {
       console.error("Error in POST request:", error);
     }
   };
+
   // handle show chip selected on click
   const handleChipClick = (chipValue) => {
     // Check if the chip is already selected
@@ -105,9 +108,7 @@ const DomainSocialHandleAvailability = () => {
         prevChips.filter((chip) => chip !== chipValue)
       );
     } else {
-      if (selectedChips.length < 3) {
-        setSelectedChips((prevChips) => [...prevChips, chipValue]);
-      }
+      setSelectedChips((prevChips) => [...prevChips, chipValue]);
     }
   };
 
@@ -164,7 +165,10 @@ const DomainSocialHandleAvailability = () => {
           that the brand names shown above will be considered for both domain &
           social handle check as well as trademark search. if you want to add
           more brand names, please{" "}
-          <a className="domain-seleted-brands-info-link" href={"/"}>
+          <a
+            className="domain-seleted-brands-info-link"
+            href={"/generate-brand"}
+          >
             Go Back
           </a>{" "}
           to generate brand names section and add.
@@ -215,17 +219,30 @@ const DomainSocialHandleAvailability = () => {
               />
             ))}
           </div>
-          <TagsInput
-            selectedTags={handleSelecetedTags}
-            fullWidth
-            // tags={customDomain}
-            variant="outlined"
-            id="tags"
-            name="tags"
-            placeholder="Enter your own domain"
-            style={{
-              width: "100%",
-            }}
+          <Autocomplete
+            multiple
+            id="tags-filled"
+            options={[]}
+            defaultValue={customDomain}
+            freeSolo
+            onChange={handleTagsChange}
+            value={customDomain}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  variant="filled"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                placeholder="Enter your Domains"
+              />
+            )}
           />
         </CustomCollapseCard>
       </div>
