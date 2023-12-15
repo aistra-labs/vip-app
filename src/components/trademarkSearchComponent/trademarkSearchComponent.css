@@ -1,0 +1,96 @@
+.trademark-wrapper{
+    margin: 25px;
+    width: 100%;
+    max-width: 980px;
+    .trademark-form{
+        li{width: 100% !important; 
+             /* border-bottom: 1px solid #E7E7E7; */
+             }
+             .form-title{
+                font-size: 16px;
+                font-weight: 600;
+                color: #000000;
+                margin: 15px 0;
+             }
+        .trademark-field-wrapper{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin :15px 0;
+            .field-label{
+             width: 35%;
+             font-size: 14px;
+             font-weight: 400;
+             color: #545454;
+            }
+            .field-text{
+             width: 60%;
+             position: relative;
+             
+             .select-box{
+                position: absolute !important;
+                padding: 10px;
+                margin: 10px 0px 10px 0;
+                width: 96%;
+                border: 1px solid #E7E7E7;
+                border-radius: 4px;
+                overflow: hidden;
+                background-color: #fff;
+                z-index: 1500;
+                box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);;
+                border: 0.5px solid #B0B0B0 !important;
+                max-height: 315px;
+                overflow: scroll;
+            }
+            }
+            
+        }
+        .trademark-ids-box{
+            margin-top: 60px;
+            .field-label-info{
+                width: 35%;
+                font-weight: 600;
+                color: #545454;
+                font-size: 14px;
+            }
+            .field-label{
+                width: 35%;
+                font-size: 14px;
+                font-weight: 400;
+                color: #545454;
+               }
+               .field-text{
+                width: 60%;
+                position: relative;
+               }
+        }
+    }
+    .button-group{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 10px;
+        .brand-back-button{
+            margin-right: 10px;
+            text-transform: initial !important;
+            border: 1px solid #E6E6E6 !important;
+            color:#333333 !important;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .brand-submit-button{
+            text-transform: initial !important;
+            color:#fff;
+            background-color: #1678FB;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+    }
+}
+ .css-1bcfi89-MuiTreeItem-content.Mui-selected {
+    background-color: #fff !important;
+    width: 100% !important;
+}
+.hideChip{
+    display: none !important;
+}

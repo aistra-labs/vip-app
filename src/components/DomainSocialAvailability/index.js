@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import CustomCollapseCard from "../common/collapse/collapse";
 import TextField from "@mui/material/TextField";
-import "../DomainSocialAvailability/domainSocialAvailability.css";
+import "../domainSocialAvailability/domainSocialAvailability.css";
 import Chip from "@mui/material/Chip";
 import images from "../images/images";
 import { Button } from "@mui/material";

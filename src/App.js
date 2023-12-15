@@ -9,6 +9,9 @@ import {
 const LoginPage = lazy(() => import("./pages/login-page"));
 const SignupPage = lazy(() => import("./pages/signup-page"));
 const GenerateBrandContainer = lazy(() => import("./pages/generate-brand"));
+const TransformStreamDefaultController = lazy(() =>
+  import("./pages/trademark-search")
+);
 const Header = lazy(() => import("./components/header"));
 const EmailVerification = lazy(() => import("./pages/email-verification"));
 const ResetPassword = lazy(() => import("./pages/reset-password"));
@@ -38,6 +41,10 @@ function App() {
               <Route
                 path="/domian-availability"
                 element={<DomainSocialHandleAvailabilityContainer />}
+              />
+              <Route
+                path="/trademark-search"
+                element={<TransformStreamDefaultController />}
               />
               {/* Add more authenticated routes as needed */}
             </>

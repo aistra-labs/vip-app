@@ -34,6 +34,7 @@ const HeaderStepper = (props) => {
         className={`stepper-step ${
           props.step >= 3 ? "stepper-active" : "stepper-default"
         }`}
+        onClick={() => navigate("/trademark-search")}
       >
         <span
           className={`stepper-count ${
